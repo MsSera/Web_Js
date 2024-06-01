@@ -20,7 +20,6 @@ const SignupSchema = Yup.object().shape({
   firstname: Yup.string().required('Field required'),
   lastname: Yup.string().required('Field required'),
   bio: Yup.string(),
-  image: Yup.mixed(),
   email: Yup.string().email('Invalid email').required('Field required'),
   password: Yup.string().min(8, 'Password must be at least 8 characters').required('Field required'),
 });
@@ -32,7 +31,7 @@ const SignupForm = () => {
 
   return (
     <Formik
-      initialValues={{ firstname: '', lastname: '', bio: '', image: '', email: '', password: '' }}
+      initialValues={{ firstname: '', lastname: '', bio: '', email: '', password: '' }}
       validationSchema={SignupSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -44,7 +43,7 @@ const SignupForm = () => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, errors, touched, setFieldValue }) => (
+      {({ isSubmitting, errors, touched }) => (
         <Form>
           <Box mb={2}>
             <Field
@@ -75,24 +74,6 @@ const SignupForm = () => {
               error={touched.bio && !!errors.bio}
               helperText={touched.bio && errors.bio}
             />
-          </Box>
-          <Box mb={2}>
-          <input
-            id="image"
-            name="image"
-            type="file"
-            onChange={(event) => {
-              const file = event.currentTarget.files && event.currentTarget.files[0];
-              if (file) {
-                setFieldValue("image", file);
-              }
-            }}
-          />
-
-            <label htmlFor="image">Insert Image</label>
-            {touched.image && errors.image && (
-              <div style={{ color: "red" }}>{errors.image}</div>
-            )}
           </Box>
           <Box mb={2}>
             <Field
