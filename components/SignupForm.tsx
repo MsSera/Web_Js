@@ -9,28 +9,30 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(2),
-    backgroundColor: '#4EA685',
+    backgroundColor: 'pink',  
     '&:hover': {
-      backgroundColor: '#4EA685',
+      backgroundColor: 'pink', 
     },
   },
 }));
 
 const SignupSchema = Yup.object().shape({
-  firstname: Yup.string().required('First name is required'),
-  lastname: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  firstname: Yup.string().required('Field required'),
+  lastname: Yup.string().required('Field required'),
+  bio: Yup.string(),
+  image: Yup.mixed(),
+  email: Yup.string().email('Invalid email').required('Field required'),
+  password: Yup.string().min(8, 'Password must be at least 8 characters').required('Field required'),
 });
 
 const SignupForm = () => {
   const router = useRouter();
-  const classes = useStyles();
+  const classes = useStyles(); 
   const [isSuccess, setIsSuccess] = useState(false);
 
   return (
     <Formik
-      initialValues={{ firstname: '', lastname: '', email: '', password: '' }}
+      initialValues={{ firstname: '', lastname: '', bio: '', image: '', email: '', password: '' }}
       validationSchema={SignupSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -42,7 +44,7 @@ const SignupForm = () => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, errors, touched }) => (
+      {({ isSubmitting, errors, touched, setFieldValue }) => (
         <Form>
           <Box mb={2}>
             <Field
@@ -63,6 +65,34 @@ const SignupForm = () => {
               error={touched.lastname && !!errors.lastname}
               helperText={touched.lastname && errors.lastname}
             />
+          </Box>
+          <Box mb={2}>
+            <Field
+              as={TextField}
+              name="bio"
+              label="Bio"
+              fullWidth
+              error={touched.bio && !!errors.bio}
+              helperText={touched.bio && errors.bio}
+            />
+          </Box>
+          <Box mb={2}>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            onChange={(event) => {
+              const file = event.currentTarget.files && event.currentTarget.files[0];
+              if (file) {
+                setFieldValue("image", file);
+              }
+            }}
+          />
+
+            <label htmlFor="image">Insert Image</label>
+            {touched.image && errors.image && (
+              <div style={{ color: "red" }}>{errors.image}</div>
+            )}
           </Box>
           <Box mb={2}>
             <Field
@@ -92,7 +122,7 @@ const SignupForm = () => {
             className={classes.button}
             disabled={isSubmitting || isSuccess}
           >
-            {isSuccess ? 'Signup Successfull!' : 'Signup'}
+            {isSuccess ? 'Signup Successfully!' : 'Signup'}
           </Button>
         </Form>
       )}

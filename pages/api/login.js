@@ -4,7 +4,7 @@ import { query } from '../../utils/db';
 export default async function handler(req, res) {
   const { email, password } = req.body;
   const result = await query(
-    `SELECT * FROM users WHERE email = ? AND password = ?`,
+    `SELECT * FROM users WHERE user_email = ? AND user_password = ?`,
     [email, password]
   );
   if (result.length > 0) {

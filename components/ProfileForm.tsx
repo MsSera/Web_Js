@@ -1,7 +1,7 @@
+import { Box, Typography, Container, Paper, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button, Typography, Container, Paper } from '@material-ui/core';
 import useSWR from 'swr';
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ const ProfileSchema = Yup.object().shape({
   lastname: Yup.string(),
   email: Yup.string().email('Invalid email'),
   bio: Yup.string(),
+  image: Yup.mixed(),
 });
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
@@ -27,23 +28,24 @@ const ProfileForm = () => {
     <Container maxWidth="sm">
       <Paper style={{ padding: 20, marginTop: 20 }}>
         <Typography variant="h4" gutterBottom>
-          Profile
-        </Typography>
+        Profile
+      </Typography>
+
         {!isEditing ? (
-          <div>
+          <Box sx={{ flexGrow: 1 }}>
             <Typography variant="subtitle1" gutterBottom>
-              Name: {data.firstname} {data.lastname}
+              Name: {data.user_firstname} {data.user_lastname}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              Email: {data.email}
+              Email: {data.user_email}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              Bio: {data.bio}
+              Bio: {data.user_bio}
             </Typography>
             <Button variant="contained" color="primary" onClick={handleEdit}>
               Edit Profile
             </Button>
-          </div>
+          </Box>
         ) : (
           <Formik
             initialValues={{

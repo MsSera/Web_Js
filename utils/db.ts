@@ -1,19 +1,3 @@
-// // utils/db.ts
-// import mysql from 'mysql2/promise';
-
-// export const connectToDatabase = async () => {
-//   const connection = await mysql.createConnection({
-//     host: process.env.localhost,
-//     user: process.env.root,
-//     password: process.env.renz,
-//     database: process.env.webfin,
-//   });
-//   return connection;
-// };
-
-
-
-
 // utils/db.ts
 import mysql from 'mysql2/promise'; // Import MySQL client library
 
@@ -21,8 +5,8 @@ import mysql from 'mysql2/promise'; // Import MySQL client library
 const dbConfig = {
   host: 'localhost',
   user: 'root',
-  password: 'renz',
-  database: 'webfin',
+  password: 'sera',
+  database: 'web_drill',
 };
 
 export const connectToDatabase = async () => {
