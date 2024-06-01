@@ -9,16 +9,16 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(2),
-    backgroundColor: '#4EA685',
+    backgroundColor: 'pink',
     '&:hover': {
-      backgroundColor: '#4EA685',
+      backgroundColor: 'pink',
     },
   },
 }));
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  email: Yup.string().email('Invalid email').required('Field required'),
+  password: Yup.string().required('Field required'),
 });
 
 const LoginForm = () => {
